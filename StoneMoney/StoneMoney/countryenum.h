@@ -1,3 +1,3 @@
 #pragma once
 
-enum countries{US, AU, NZ, FJ, TO, PG, SB};
+enum class country{US, AU, NZ, FJ, TO, PG, SB};
