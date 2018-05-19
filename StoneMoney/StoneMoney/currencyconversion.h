@@ -2,13 +2,12 @@
 #include <cassert>
 #include "countryenum.h"
 
-template<class from, class to, class money>
+template<class money, class mycountry>
 class currencyconversion
 {
 private:
-	from from_;
-	to to_;
 	money money_;
+	mycountry currentcountry_;
 
 	double US_{ 1.0 };
 	double AU_{ .76 };
@@ -20,13 +19,13 @@ private:
 
 
 public:
-	currencyconversion(from changefrom, to changeto, money currentamount) : from_(changefrom), to_(changeto), money_(currentamount)
+	currencyconversion(money currentamount, mycountry currentcountry) : money_(currentamount), currentcountry_(currentcountry)
 	{	}
 
 
-	money conversion()
+	money conversion(country to)
 	{
-		switch (from_)
+		switch (currentcountry_)
 		{
 		case country::US:
 			break;
@@ -53,33 +52,39 @@ public:
 			break;
 		}
 
-		switch (to_)
+		switch (to)
 		{
 		case country::US:
+			currentcountry_ = country::US;
 			break;
 		case country::AU:
 			money_ /= AU_;
+			currentcountry_ = country::AU;
 			break;
 		case country::NZ:
 			money_ /= NZ_;
+			currentcountry_ = country::NZ;
 			break;
 		case country::FJ:
 			money_ /= FJ_;
+			currentcountry_ = country::FJ;
 			break;
 		case country::TO:
 			money_ /= TO_;
+			currentcountry_ = country::TO;
 			break;
 		case country::PG:
 			money_ /= PG_;
+			currentcountry_ = country::PG;
 			break;
 		case country::SB:
 			money_ /= SB_;
+			currentcountry_ = country::SB;
 			break;
 		default:
 			assert(false);
 			break;
 		}
-
 		return money_;
 	}
 };
